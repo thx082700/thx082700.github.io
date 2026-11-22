@@ -1,10 +1,9 @@
-# Haoxi Tian
+# Haoxi Tian — academic homepage
 
-[Open my academic website](https://thx082700.github.io/)
-
-Research in point cloud restoration and 3D object grounding, point cloud competition projects, and a downloadable CV.
+Visit **[thx082700.github.io](https://thx082700.github.io/)**.
 
 - [GAAFormer](https://thx082700.github.io/gaaformer.html)
 - [From Fragments to Objects](https://thx082700.github.io/fragments.html)
-- [Competition projects](https://thx082700.github.io/competition.html)
-- [CV](https://thx082700.github.io/assets/Haoxi-Tian-CV.pdf)
+- [Point cloud competition](https://thx082700.github.io/competition.html)
+
+Plain HTML and CSS, hosted by GitHub Pages. No build step or JavaScript is required. Edit `index.html` for the homepage and `style.css` for shared styling. Research figures and the downloadable CV are in `assets/`.

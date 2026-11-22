@@ -1,7 +1,108 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Diagnosing object-set grounding failures in fragmented 3D maps. A research project by Haoxi Tian."><meta name="theme-color" content="#234ec5"><title>From Fragments to Objects | Haoxi Tian</title><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"><link rel="stylesheet" href="style.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap nav"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">ht.</span>Haoxi Tian</a><button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button><nav class="navlinks" id="navigation" aria-label="Main navigation"><a href="index.html#research">Research</a><a href="competition.html">Competition</a><a href="index.html#about">About</a><a href="assets/Haoxi-Tian-CV.pdf" target="_blank" rel="noopener">CV</a><a href="mailto:3042823260@qq.com">Contact</a></nav></div></header><main id="main">
-<div class="wrap"><header class="project-header"><a class="breadcrumb" href="index.html#research">All research</a><div class="tags"><span class="tag">3D object grounding</span><span class="tag neutral">Under review · HOUR at WACV 2027</span></div><h1>From Fragments to Objects</h1><p class="paper-full-title">Diagnosing Object-Set Grounding in 3D Maps</p><p class="author"><strong>Haoxi Tian</strong>School of Civil Engineering and Geomatics<br>Southwest Petroleum University</p><p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#problem">The problem</a><a href="#contribution">My contribution</a><a href="#diagnostics">Diagnostics</a><a href="#protocol">Protocol</a><a href="#findings">Findings</a><a href="#limits">Scope</a></nav>
-<section class="paper-section" id="problem"><div class="readable"><p class="eyebrow">The question</p><h2>Do two map fragments mean two objects?</h2><p class="lead">A request to “find two chairs” refers to physical objects. A 3D map might instead retrieve the seat and backrest of the same chair as separate fragments.</p><p>This study examines the query layer of fixed 3D maps. It traces where object-set grounding fails, from missing candidates to ambiguous identity and the final decision to confirm an answer.</p></div><figure class="figure"><button class="zoom" aria-label="Enlarge figure: Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0"><img src="assets/fragments-teaser.webp" alt="Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" loading="lazy"></button><span class="image-hint">Select image to enlarge</span><figcaption>A saved case from Replica office0. RGB-D evidence supports Chair A = {393, 340} and Chair B = {394, 341}, while fragment 343 remains unresolved. This illustration explains membership; it is not a measured improvement from ledger constraints.</figcaption></figure></section>
-<section class="paper-section" id="contribution"><div class="readable"><h2>My contribution</h2><p>I built an evidence-indexed query and evaluation workflow around fixed FindAnything maps. It links retrieved fragment IDs to depth-checked RGB-D views, records same-object, different-object, and unresolved judgments, and evaluates object sets separately from complete-object localization.</p><p>I designed fixed-response controls that preserve the observations and model responses while changing a specific confirmation rule. This makes it possible to distinguish an answer-policy effect from a change in the underlying object identities.</p></div></section><section class="paper-section" id="diagnostics"><h2>Separate the stages of failure</h2><div class="method-list"><div><h3>Candidate coverage</h3><p>Does the map contain eligible fragments for the requested objects in the first place?</p></div><div><h3>Physical identity</h3><p>Do retrieved fragments belong to the same physical object, different objects, or an unresolved case?</p></div><div><h3>Answer confirmation</h3><p>How do the rules for within-group support and cross-group distinctness change the confirmed answer?</p></div><div><h3>Geometric localization</h3><p>Even when an object set is correct, how well do its fragments localize complete physical objects?</p></div></div><div class="stats"><div class="stat"><strong>5</strong><span>Fixed FindAnything maps</span></div><div class="stat"><strong>20</strong><span>Scene/category pools</span></div><div class="stat"><strong>60 × 3</strong><span>Count queries across three runs</span></div></div><p class="readable">An auditable identity ledger links membership judgments to indexed RGB-D evidence. Matched-response controls preserve shared observations and judgments while changing a specific execution stage.</p></section>
-<section class="paper-section" id="protocol"><h2>Implementation and evaluation protocol</h2><div class="method-list"><div><h3>Evidence preparation</h3><p>Category retrieval uses the upstream ViT-L/14 encoder and C++ scorer. Five candidates per scene/category pool are projected into at most two fixed RGB-D seed views, with recorded depth used for visibility checks. Ground-truth instance labels are reserved for evaluation.</p></div><div><h3>Identity and confirmation</h3><p>Count-neutral proposal and review produce same, different, or unknown pair judgments. The executor then applies membership and distinctness checks before confirming the requested object set. Each decision retains its evidence references.</p></div><div><h3>Fixed study cohort</h3><p>Five Replica maps provide 20 scene/category pools, 100 candidate entries, and 152 prepared evidence images. Sixty queries contain 42 positives and 18 count-insufficient negatives; three fresh runs measure variation on these fixed inputs.</p></div><div><h3>Audit and replay</h3><p>An independent implementation of the scoring rules reproduced correctness and pair metrics for 1,080 archived case records. Matched-response replay reconstructed all 180 Ledger outcomes across three runs before changing the readout rule.</p></div></div><p class="small">Archived records include multiple pipelines and controls; they are not 1,080 independent queries. Repeated count queries share maps, candidates, and observations.</p></section><section class="paper-section" id="findings"><div class="readable"><h2>What the diagnostic study reveals</h2><ul class="detail-list"><li>Under the primary association rule, candidate eligibility limits possible verified success to <strong>27 of 42 positive queries</strong>. This is an eligibility ceiling, not achieved accuracy.</li><li><strong>Eleven queries remain ineligible</strong> throughout the tested association-threshold range.</li><li>In the matched confirmation-rule intervention, all five changed query/run rows come from <strong>one sofa pool</strong>, with no identity-membership changes.</li><li>Residual splits and weak complete-object localization reveal failures that final set accuracy alone can hide.</li></ul></div></section>
-<section class="paper-section" id="limits"><div class="readable"><h2>What the diagnosis is useful for</h2><p>The diagnostic separation helps identify whether a system needs better candidate retrieval, identity association, confirmation logic, or geometric localization. A stricter answer rule can change which answers are released while leaving every identity partition unchanged.</p><p>The study supports evaluating coverage, identity, confirmation, and localization separately. It does not establish a general accuracy benefit from stricter ledger assembly.</p><p>The experiments use fixed maps and recorded observations. They do not measure robot navigation or closed-loop control performance.</p></div></section><div class="bottom-nav"><a href="index.html#research">Back to research</a><a href="gaaformer.html">Explore GAAFormer</a></div></div>
-</main><footer class="footer"><div class="wrap"><span>© 2026 Haoxi Tian</span><span>3D perception · Geometry · Engineering</span></div></footer><dialog id="image-dialog" aria-label="Expanded research figure"><div class="dialog-head"><span>Research figure</span><button class="close-dialog">Close</button></div><div class="dialog-body"><img id="dialog-image" alt=""></div></dialog><script src="site.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Diagnosing object-set grounding failures in fragmented 3D maps. A research project by Haoxi Tian.">
+<meta name="theme-color" content="#ffffff">
+<title>From Fragments to Objects | Haoxi Tian</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap nav">
+<a class="brand" href="index.html">Haoxi Tian</a><nav class="navlinks" aria-label="Main navigation"><a href="index.html#research">Research</a><a href="index.html#competition">Competition</a><a href="index.html#education">Education</a><a href="assets/Haoxi-Tian-CV.pdf">CV</a></nav>
+</div></header><main id="main">
+<div class="wrap">
+<header class="project-header"><a class="breadcrumb" href="index.html#research">All research</a><div class="tags">
+<span class="tag">3D object grounding</span><span class="tag neutral">Under review · HOUR at WACV 2027</span>
+</div>
+<h1>From Fragments to Objects</h1>
+<p class="paper-full-title">Diagnosing Object-Set Grounding in 3D Maps</p>
+<p class="author"><strong>Haoxi Tian</strong>School of Civil Engineering and Geomatics<br>Southwest Petroleum University</p>
+<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#problem">The problem</a><a href="#contribution">My contribution</a><a href="#diagnostics">Diagnostics</a><a href="#protocol">Protocol</a><a href="#findings">Findings</a><a href="#limits">Scope</a></nav>
+<section class="paper-section" id="problem"><div class="readable">
+<p class="eyebrow">The question</p>
+<h2>Do two map fragments mean two objects?</h2>
+<p class="lead">A request to “find two chairs” refers to physical objects. A 3D map might instead retrieve the seat and backrest of the same chair as separate fragments.</p>
+<p>This study examines the query layer of fixed 3D maps. It traces where object-set grounding fails, from missing candidates to ambiguous identity and the final decision to confirm an answer.</p>
+</div>
+<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" href="assets/fragments-teaser.webp" target="_blank" rel="noopener"><img src="assets/fragments-teaser.webp" alt="Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" loading="lazy" width="2200" height="769" decoding="async"></a><figcaption>A saved case from Replica office0. RGB-D evidence supports Chair A = {393, 340} and Chair B = {394, 341}, while fragment 343 remains unresolved. This illustration explains membership; it is not a measured improvement from ledger constraints.</figcaption></figure></section>
+<section class="paper-section" id="contribution"><div class="readable">
+<h2>My contribution</h2>
+<p>I built an evidence-indexed query and evaluation workflow around fixed FindAnything maps. It links retrieved fragment IDs to depth-checked RGB-D views, records same-object, different-object, and unresolved judgments, and evaluates object sets separately from complete-object localization.</p>
+<p>I designed fixed-response controls that preserve the observations and model responses while changing a specific confirmation rule. This makes it possible to distinguish an answer-policy effect from a change in the underlying object identities.</p>
+</div></section><section class="paper-section" id="diagnostics"><h2>Separate the stages of failure</h2>
+<div class="method-list">
+<div>
+<h3>Candidate coverage</h3>
+<p>Does the map contain eligible fragments for the requested objects in the first place?</p>
+</div>
+<div>
+<h3>Physical identity</h3>
+<p>Do retrieved fragments belong to the same physical object, different objects, or an unresolved case?</p>
+</div>
+<div>
+<h3>Answer confirmation</h3>
+<p>How do the rules for within-group support and cross-group distinctness change the confirmed answer?</p>
+</div>
+<div>
+<h3>Geometric localization</h3>
+<p>Even when an object set is correct, how well do its fragments localize complete physical objects?</p>
+</div>
+</div>
+<div class="stats">
+<div class="stat">
+<strong>5</strong><span>Fixed FindAnything maps</span>
+</div>
+<div class="stat">
+<strong>20</strong><span>Scene/category pools</span>
+</div>
+<div class="stat">
+<strong>60 × 3</strong><span>Count queries across three runs</span>
+</div>
+</div>
+<p class="readable">An auditable identity ledger links membership judgments to indexed RGB-D evidence. Matched-response controls preserve shared observations and judgments while changing a specific execution stage.</p></section>
+<section class="paper-section" id="protocol"><h2>Implementation and evaluation protocol</h2>
+<div class="method-list">
+<div>
+<h3>Evidence preparation</h3>
+<p>Category retrieval uses the upstream ViT-L/14 encoder and C++ scorer. Five candidates per scene/category pool are projected into at most two fixed RGB-D seed views, with recorded depth used for visibility checks. Ground-truth instance labels are reserved for evaluation.</p>
+</div>
+<div>
+<h3>Identity and confirmation</h3>
+<p>Count-neutral proposal and review produce same, different, or unknown pair judgments. The executor then applies membership and distinctness checks before confirming the requested object set. Each decision retains its evidence references.</p>
+</div>
+<div>
+<h3>Fixed study cohort</h3>
+<p>Five Replica maps provide 20 scene/category pools, 100 candidate entries, and 152 prepared evidence images. Sixty queries contain 42 positives and 18 count-insufficient negatives; three fresh runs measure variation on these fixed inputs.</p>
+</div>
+<div>
+<h3>Audit and replay</h3>
+<p>An independent implementation of the scoring rules reproduced correctness and pair metrics for 1,080 archived case records. Matched-response replay reconstructed all 180 Ledger outcomes across three runs before changing the readout rule.</p>
+</div>
+</div>
+<p class="small">Archived records include multiple pipelines and controls; they are not 1,080 independent queries. Repeated count queries share maps, candidates, and observations.</p></section><section class="paper-section" id="findings"><div class="readable">
+<h2>What the diagnostic study reveals</h2>
+<ul class="detail-list">
+<li>Under the primary association rule, candidate eligibility limits possible verified success to <strong>27 of 42 positive queries</strong>. This is an eligibility ceiling, not achieved accuracy.</li>
+<li>
+<strong>Eleven queries remain ineligible</strong> throughout the tested association-threshold range.</li>
+<li>In the matched confirmation-rule intervention, all five changed query/run rows come from <strong>one sofa pool</strong>, with no identity-membership changes.</li>
+<li>Residual splits and weak complete-object localization reveal failures that final set accuracy alone can hide.</li>
+</ul>
+</div></section>
+<section class="paper-section" id="limits"><div class="readable">
+<h2>What the diagnosis is useful for</h2>
+<p>The diagnostic separation helps identify whether a system needs better candidate retrieval, identity association, confirmation logic, or geometric localization. A stricter answer rule can change which answers are released while leaving every identity partition unchanged.</p>
+<p>The study supports evaluating coverage, identity, confirmation, and localization separately. It does not establish a general accuracy benefit from stricter ledger assembly.</p>
+<p>The experiments use fixed maps and recorded observations. They do not measure robot navigation or closed-loop control performance.</p>
+</div></section><div class="bottom-nav">
+<a href="index.html#research">Back to research</a><a href="gaaformer.html">Explore GAAFormer</a>
+</div>
+</div>
+</main><footer class="footer"><div class="wrap">
+<a href="index.html">Haoxi Tian</a><a href="mailto:3042823260@qq.com">3042823260@qq.com</a>
+</div></footer>
+</body>
+</html>
