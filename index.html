@@ -7,43 +7,44 @@
   <meta name="theme-color" content="#ffffff">
   <title>Haoxi Tian</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="style.css?v=0baee04c35">
+  <link rel="stylesheet" href="style.css?v=8e357ba2ee">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<main class="homepage" id="main">
-  <header class="intro" id="about">
-    <h1>Haoxi Tian <span lang="zh">田浩希</span>
+<div class="homepage">
+<header class="profile" id="about">
+  <h1>Haoxi Tian <span lang="zh">田浩希</span>
 </h1>
-    <p class="affiliation">B.Eng. in Civil Engineering · Southwest Petroleum University</p>
-    <p>I work on <strong>3D perception</strong>, with a focus on point cloud restoration, instance segmentation, and object identity in 3D maps. I am interested in how reliable geometric understanding can support robotic systems.</p>
-    <p>I graduated from Southwest Petroleum University in June 2026. My research and competition projects connect a background in mechanics and engineering modeling with learning from 3D data.</p>
-    <p class="profile-links"><a href="mailto:3042823260@qq.com">Email</a><span aria-hidden="true"> / </span><a href="assets/Haoxi-Tian-CV.pdf">CV (PDF)</a><span aria-hidden="true"> / </span><a href="assets/Haoxi-Tian-CV.docx" download>CV (Word)</a><span aria-hidden="true"> / </span><a href="https://github.com/thx082700">GitHub</a></p>
-    <nav class="section-links" aria-label="Homepage sections"><a href="#research">Research</a><a href="#competition">Competition</a><a href="#education">Education</a></nav>
-  </header>
-
-  <section class="home-section" id="research" aria-labelledby="research-heading">
+  <p class="affiliation">Civil Engineering graduate<br>Southwest Petroleum University</p>
+  <p class="bio">My research focuses on point cloud restoration and object-level 3D scene understanding. I am interested in connecting reliable perception with robotic systems.</p>
+  <p class="profile-email"><a href="mailto:3042823260@qq.com">3042823260@qq.com</a></p>
+  <div class="profile-links">
+<a href="assets/Haoxi-Tian-CV.pdf">CV (PDF)</a><a href="assets/Haoxi-Tian-CV.docx" download>Word</a><a href="https://github.com/thx082700">GitHub</a>
+</div>
+  <nav class="section-links" aria-label="Homepage sections"><a href="#research">Research</a><a href="#competition">Competition &amp; awards</a><a href="#education">Education &amp; training</a></nav>
+</header>
+<main class="home-content" id="main"><section class="home-section" id="research" aria-labelledby="research-heading">
     <h2 id="research-heading">Research</h2>
     <article class="research-row">
-      <a class="research-thumb" href="gaaformer.html" aria-label="GAAFormer project"><img src="assets/gaa-architecture.webp" alt="GAAFormer encoder and geometry-anchored decoder architecture" width="1525" height="823" decoding="async"></a>
       <div class="research-copy">
         <h3><a href="gaaformer.html">GAAFormer: Geometry-Anchored Attention Transformer for Joint Point Cloud Denoising and Upsampling</a></h3>
         <p class="authors">Haoxi Tian</p>
         <p class="venue">Under review at CVPR 2027</p>
         <p>Fixed spatial attention windows stabilize neighborhoods as octree branches change. On 120 PUNet denoising inputs, mean Chamfer distance decreased by <strong>3.35%</strong> and Hausdorff distance by <strong>19.34%</strong> versus Serial-OUFormer, with no added learned parameters.</p>
-        <p class="resource-links"><a href="gaaformer.html">[Project]</a><a href="gaaformer.html#results">[Results]</a></p>
+        <p class="resource-links"><a href="gaaformer.html">Project page</a><a href="gaaformer.html#results">Results</a><a href="assets/gaa-architecture.webp" target="_blank" rel="noopener" aria-label="View full-size research figure in a new tab">Full figure</a></p>
       </div>
-    </article>
+    <a class="research-thumb" href="gaaformer.html" aria-label="GAAFormer project"><img src="assets/gaa-architecture.webp" alt="GAAFormer encoder and geometry-anchored decoder architecture" width="1525" height="823" decoding="async"></a>
+      </article>
     <article class="research-row">
-      <a class="research-thumb" href="fragments.html" aria-label="From Fragments to Objects project"><img src="assets/fragments-teaser.webp" alt="Retrieved 3D map fragments grouped into physical chairs using RGB-D evidence" loading="lazy" width="2200" height="769" decoding="async"></a>
       <div class="research-copy">
         <h3><a href="fragments.html">From Fragments to Objects: Diagnosing Object-Set Grounding in 3D Maps</a></h3>
         <p class="authors">Haoxi Tian</p>
         <p class="venue">Under review at HOUR, WACV 2027 Workshop</p>
         <p>A diagnostic workflow separates missing candidates, object identity, answer confirmation, and localization. Evaluated on <strong>60 count queries across five Replica scenes</strong> in three runs, with matched-response controls to isolate confirmation effects.</p>
-        <p class="resource-links"><a href="fragments.html">[Project]</a><a href="fragments.html#findings">[Findings]</a></p>
+        <p class="resource-links"><a href="fragments.html">Project page</a><a href="fragments.html#findings">Findings</a><a href="assets/fragments-teaser.webp" target="_blank" rel="noopener" aria-label="View full-size research figure in a new tab">Full figure</a></p>
       </div>
-    </article>
+    <a class="research-thumb" href="fragments.html" aria-label="From Fragments to Objects project"><img src="assets/fragments-teaser.webp" alt="Retrieved 3D map fragments grouped into physical chairs using RGB-D evidence" loading="lazy" width="2200" height="769" decoding="async"></a>
+      </article>
     <p class="note">Both manuscripts have been submitted to arXiv; public paper links will be added when available.</p>
   </section>
 
@@ -53,13 +54,13 @@
     <p>I independently completed three tracks under faculty supervision, from data preparation and model training to evaluation and an on-site technical presentation.</p>
     <ul class="award-list">
       <li>
-<strong>Special Prize — Individual Tree Segmentation.</strong> TreeLearn-based sparse 3D convolution, overlapping scene tiles, and instance clustering.<br><span class="resource-links"><a href="competition.html#trees">[Project]</a><a href="https://github.com/thx082700/Street-Tree-Segmentation-Mobile-Laser-Scanning">[Code]</a></span>
+<strong>Special Prize — Individual Tree Segmentation.</strong> TreeLearn-based sparse 3D convolution, overlapping scene tiles, and instance clustering.<br><span class="resource-links"><a href="competition.html#trees">Project page</a><a href="https://github.com/thx082700/Street-Tree-Segmentation-Mobile-Laser-Scanning">Code</a></span>
 </li>
       <li>
-<strong>Second Prize — Urban Road Semantic and Instance Segmentation.</strong> SoftGroup-based semantic and instance segmentation, with analysis of merged neighboring objects.<br><span class="resource-links"><a href="competition.html#urban">[Project]</a></span>
+<strong>Second Prize — Urban Road Semantic and Instance Segmentation.</strong> SoftGroup-based semantic and instance segmentation, with analysis of merged neighboring objects.<br><span class="resource-links"><a href="competition.html#urban">Project page</a></span>
 </li>
       <li>
-<strong>Railway Semantic Segmentation.</strong> Historical competition submission: <strong>79.29% mIoU</strong> and <strong>93.14% overall accuracy</strong> across 11 classes. Participation without an award.<br><span class="resource-links"><a href="competition.html#railway">[Project &amp; result record]</a><a href="https://github.com/thx082700/Railway3D-Semantic-Segmentation">[Reconstructed code]</a></span>
+<strong>Railway Semantic Segmentation.</strong> Historical competition submission: <strong>79.29% mIoU</strong> and <strong>93.14% overall accuracy</strong> across 11 classes. Participation without an award.<br><span class="resource-links"><a href="competition.html#railway">Project &amp; results</a><a href="https://github.com/thx082700/Railway3D-Semantic-Segmentation">Reconstructed code</a></span>
 </li>
     </ul>
   </section>
@@ -80,7 +81,7 @@
 </div>
     <p class="note">Additional engineering and programming projects are described in my <a href="assets/Haoxi-Tian-CV.pdf">CV</a>.</p>
   </section>
-  <footer class="home-footer"><span>Haoxi Tian</span><a href="mailto:3042823260@qq.com">3042823260@qq.com</a></footer>
-</main>
+  <footer class="home-footer">Haoxi Tian · Academic homepage</footer></main>
+</div>
 </body>
 </html>

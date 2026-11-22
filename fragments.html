@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#ffffff">
 <title>From Fragments to Objects | Haoxi Tian</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="style.css?v=0baee04c35">
+<link rel="stylesheet" href="style.css?v=8e357ba2ee">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap nav">
@@ -20,14 +20,13 @@
 <h1>From Fragments to Objects</h1>
 <p class="paper-full-title">Diagnosing Object-Set Grounding in 3D Maps</p>
 <p class="author"><strong>Haoxi Tian</strong>School of Civil Engineering and Geomatics<br>Southwest Petroleum University</p>
-<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#problem">The problem</a><a href="#contribution">My contribution</a><a href="#diagnostics">Diagnostics</a><a href="#protocol">Protocol</a><a href="#findings">Findings</a><a href="#limits">Scope</a></nav>
+<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#problem">Overview</a><a href="#diagnostics">Method</a><a href="#findings">Findings</a><a href="#limits">Scope</a></nav>
 <section class="paper-section" id="problem"><div class="readable">
-<p class="eyebrow">The question</p>
 <h2>Do two map fragments mean two objects?</h2>
 <p class="lead">A request to “find two chairs” refers to physical objects. A 3D map might instead retrieve the seat and backrest of the same chair as separate fragments.</p>
 <p>This study examines the query layer of fixed 3D maps. It traces where object-set grounding fails, from missing candidates to ambiguous identity and the final decision to confirm an answer.</p>
 </div>
-<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" href="assets/fragments-teaser.webp" target="_blank" rel="noopener"><img src="assets/fragments-teaser.webp" alt="Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" loading="lazy" width="2200" height="769" decoding="async"></a><figcaption>A saved case from Replica office0. RGB-D evidence supports Chair A = {393, 340} and Chair B = {394, 341}, while fragment 343 remains unresolved. This illustration explains membership; it is not a measured improvement from ledger constraints.</figcaption></figure></section>
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0 (opens in a new tab)" href="assets/fragments-teaser.webp" target="_blank" rel="noopener"><img src="assets/fragments-teaser.webp" alt="Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" loading="lazy" width="2200" height="769" decoding="async"></a><figcaption>A saved case from Replica office0. RGB-D evidence supports Chair A = {393, 340} and Chair B = {394, 341}, while fragment 343 remains unresolved. This illustration explains membership; it is not a measured improvement from ledger constraints.</figcaption></figure></section>
 <section class="paper-section" id="contribution"><div class="readable">
 <h2>My contribution</h2>
 <p>I built an evidence-indexed query and evaluation workflow around fixed FindAnything maps. It links retrieved fragment IDs to depth-checked RGB-D views, records same-object, different-object, and unresolved judgments, and evaluates object sets separately from complete-object localization.</p>

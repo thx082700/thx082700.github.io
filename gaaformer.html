@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#ffffff">
 <title>GAAFormer | Haoxi Tian</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="style.css?v=0baee04c35">
+<link rel="stylesheet" href="style.css?v=8e357ba2ee">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap nav">
@@ -20,14 +20,13 @@
 <h1>GAAFormer</h1>
 <p class="paper-full-title">Geometry-Anchored Attention Transformer for Joint Point Cloud Denoising and Upsampling</p>
 <p class="author"><strong>Haoxi Tian</strong>School of Civil Engineering and Geomatics<br>Southwest Petroleum University</p>
-<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#overview">Overview</a><a href="#contribution">My contribution</a><a href="#method">Method</a><a href="#results">Results</a><a href="#analysis">Ablations</a><a href="#cost">Efficiency</a><a href="#scope">Scope</a></nav>
+<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#analysis">Analysis</a></nav>
 <section class="paper-section" id="overview"><div class="readable">
-<p class="eyebrow">The question</p>
 <h2>Can one geometry model remove noise and fill in detail?</h2>
 <p class="lead">Denoising and upsampling both require points to follow the underlying surface. GAAFormer uses a shared octree transformer to address both tasks.</p>
 <p>Its decoder defines attention neighborhoods with fixed voxel windows and alternating shifts. This anchors surviving-node neighborhoods to spatial coordinates as the generated output tree changes.</p>
 </div>
-<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Comparison of task-specific pipelines and the unified GAAFormer architecture" href="assets/gaa-paradigm.webp" target="_blank" rel="noopener"><img src="assets/gaa-paradigm.webp" alt="Comparison of task-specific pipelines and the unified GAAFormer architecture" loading="lazy" width="1512" height="394" decoding="async"></a><figcaption>The same geometry-anchored attention module and network checkpoint support denoising and upsampling.</figcaption></figure></section>
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Comparison of task-specific pipelines and the unified GAAFormer architecture (opens in a new tab)" href="assets/gaa-paradigm.webp" target="_blank" rel="noopener"><img src="assets/gaa-paradigm.webp" alt="Comparison of task-specific pipelines and the unified GAAFormer architecture" loading="lazy" width="1512" height="394" decoding="async"></a><figcaption>The same geometry-anchored attention module and network checkpoint support denoising and upsampling.</figcaption></figure></section>
 <section class="paper-section" id="contribution"><div class="readable">
 <h2>My contribution</h2>
 <p>I developed and evaluated geometry-anchored attention for the decoder of an output-guided octree transformer. The work combines the attention implementation, a deletion-consistency analysis, matched-backbone comparisons, architecture and objective ablations, and inference-cost measurements.</p>
@@ -54,10 +53,10 @@
 <p>The model retains the encoder, positional encodings, prediction heads, and parameter count of the serialized-attention backbone.</p>
 </div>
 </div>
-<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Architecture of the shared encoder and geometry-anchored decoder" href="assets/gaa-architecture.webp" target="_blank" rel="noopener"><img src="assets/gaa-architecture.webp" alt="Architecture of the shared encoder and geometry-anchored decoder" loading="lazy" width="1525" height="823" decoding="async"></a><figcaption>Architecture diagram from the manuscript. The decoder uses fixed windows and alternating shifts to exchange spatial context.</figcaption></figure></section>
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Architecture of the shared encoder and geometry-anchored decoder (opens in a new tab)" href="assets/gaa-architecture.webp" target="_blank" rel="noopener"><img src="assets/gaa-architecture.webp" alt="Architecture of the shared encoder and geometry-anchored decoder" loading="lazy" width="1525" height="823" decoding="async"></a><figcaption>Architecture diagram from the manuscript. The decoder uses fixed windows and alternating shifts to exchange spatial context.</figcaption></figure></section>
 <section class="paper-section" id="results"><h2>Experimental results</h2>
 <p class="readable">PUNet evaluation uses 20 test geometries at 10k and 50k input points, each with 1%, 2%, and 2.5% noise: 120 denoising inputs. Upsampling uses 27 PU-GAN, 100 PU1K, and 14 Sketchfab inputs. The same checkpoint handles all 261 inputs. The table below reports aggregate PUNet denoising results.</p>
-<div class="table-wrap"><table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Experimental results table"><table>
 <thead><tr>
 <th scope="col">Model</th>
 <th scope="col">CD × 10⁵</th>
@@ -80,7 +79,7 @@
 </tbody>
 </table></div>
 <p class="small">Lower is better. Mean denoising CD and HD decrease by 3.35% and 19.34%, respectively, relative to this backbone. Values are reported in the submitted manuscript.</p>
-<details id="panel-denoising" class="comparison" open=""><summary>Denoising visual comparison</summary><figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Denoising results for PUNet at 50k points and 2.5 percent noise" href="assets/gaa-baseline_denoising.webp" target="_blank" rel="noopener"><img src="assets/gaa-baseline_denoising.webp" alt="Denoising results for PUNet at 50k points and 2.5 percent noise" loading="lazy" width="1512" height="445" decoding="async"></a><figcaption>Selected PUNet example with 50k input points and 2.5% noise. Colors encode point-to-surface distance. Insets compare local geometry, not whole-dataset averages.</figcaption></figure></details><details id="panel-upsampling" class="comparison"><summary>Upsampling visual comparison</summary><figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Upsampling comparisons on PU-GAN, PU1K and Sketchfab" href="assets/gaa-baseline_upsampling.webp" target="_blank" rel="noopener"><img src="assets/gaa-baseline_upsampling.webp" alt="Upsampling comparisons on PU-GAN, PU1K and Sketchfab" loading="lazy" width="1512" height="1206" decoding="async"></a><figcaption>Selected examples with 5k input points from PU-GAN, PU1K, and Sketchfab. Colors show point-to-surface error, and inset values describe the corresponding local regions.</figcaption></figure></details></section>
+<details id="panel-denoising" class="comparison" open=""><summary>Denoising visual comparison</summary><figure class="figure"><a class="figure-link" aria-label="View full-size figure: Denoising results for PUNet at 50k points and 2.5 percent noise (opens in a new tab)" href="assets/gaa-baseline_denoising.webp" target="_blank" rel="noopener"><img src="assets/gaa-baseline_denoising.webp" alt="Denoising results for PUNet at 50k points and 2.5 percent noise" loading="lazy" width="1512" height="445" decoding="async"></a><figcaption>Selected PUNet example with 50k input points and 2.5% noise. Colors encode point-to-surface distance. Insets compare local geometry, not whole-dataset averages.</figcaption></figure></details><details id="panel-upsampling" class="comparison"><summary>Upsampling visual comparison</summary><figure class="figure"><a class="figure-link" aria-label="View full-size figure: Upsampling comparisons on PU-GAN, PU1K and Sketchfab (opens in a new tab)" href="assets/gaa-baseline_upsampling.webp" target="_blank" rel="noopener"><img src="assets/gaa-baseline_upsampling.webp" alt="Upsampling comparisons on PU-GAN, PU1K and Sketchfab" loading="lazy" width="1512" height="1206" decoding="async"></a><figcaption>Selected examples with 5k input points from PU-GAN, PU1K, and Sketchfab. Colors show point-to-surface error, and inset values describe the corresponding local regions.</figcaption></figure></details></section>
 <section class="paper-section" id="analysis"><h2>Testing the mechanism</h2>
 <div class="method-list">
 <div>
@@ -96,7 +95,7 @@
 </div>
 <p class="small">All values are reported in the submitted manuscript. The deletion-consistency property applies at a fixed depth and shift with fixed node coordinates.</p></section>
 <section class="paper-section" id="cost"><h2>Memory and latency tradeoffs</h2>
-<div class="table-wrap"><table>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Memory and latency tradeoffs table"><table>
 <caption>RTX 4090 inference measurements</caption>
 <thead><tr>
 <th scope="col">Input case</th>

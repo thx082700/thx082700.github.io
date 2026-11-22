@@ -7,14 +7,13 @@
 <meta name="theme-color" content="#ffffff">
 <title>LiDAR Competition | Haoxi Tian</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="style.css?v=0baee04c35">
+<link rel="stylesheet" href="style.css?v=8e357ba2ee">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap nav">
 <a class="brand" href="index.html">Haoxi Tian</a><nav class="navlinks" aria-label="Main navigation"><a href="index.html#research">Research</a><a href="index.html#competition">Competition</a><a href="index.html#education">Education</a><a href="assets/Haoxi-Tian-CV.pdf">CV</a></nav>
 </div></header><main id="main"><div class="wrap">
-<header class="project-header"><a class="breadcrumb" href="index.html">Home</a><p class="eyebrow">Competition experience · 2025</p>
-<h1>Point Cloud Segmentation Competition</h1>
+<header class="project-header"><a class="breadcrumb" href="index.html">Home</a><h1>Point Cloud Segmentation Competition</h1>
 <p class="paper-full-title">9th China LiDAR Conference<br>Point Cloud Intelligent Parsing Competition</p>
 <p>June–September 2025 · Presented in Wuhan, China</p></header><nav class="paper-nav" aria-label="Competition tracks"><a href="#trees">Individual trees · Special Prize</a><a href="#urban">Urban roads · Second Prize</a><a href="#railway">Railway scenes</a></nav><nav class="paper-nav" aria-label="Project sections"><a href="#role">My contribution</a><a href="#trees">Individual trees</a><a href="#urban">Urban roads</a><a href="#railway">Railway scenes</a></nav>
 <section class="paper-section" id="role"><div class="readable">
@@ -58,7 +57,7 @@
 </div>
 </div>
 <div class="gallery">
-<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Tree instance predictions for WHU-STree scene 13_2 with uneven point density" href="assets/tree-density.png" target="_blank" rel="noopener"><img src="assets/tree-density.png" alt="Tree instance predictions for WHU-STree scene 13_2 with uneven point density" loading="lazy" width="1668" height="651" decoding="async"></a><figcaption>Scene 13_2 from my competition presentation. Colors distinguish predicted tree instances; this is a qualitative result, not a per-scene accuracy score.</figcaption></figure><figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Tree instance predictions for WHU-STree scene 15_2-1 with touching crowns" href="assets/tree-crowns.png" target="_blank" rel="noopener"><img src="assets/tree-crowns.png" alt="Tree instance predictions for WHU-STree scene 15_2-1 with touching crowns" loading="lazy" width="1549" height="741" decoding="async"></a><figcaption>Scene 15_2-1 from my competition presentation. Touching crowns make it difficult to separate neighboring physical trees.</figcaption></figure>
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Tree instance predictions for WHU-STree scene 13_2 with uneven point density (opens in a new tab)" href="assets/tree-density.png" target="_blank" rel="noopener"><img src="assets/tree-density.png" alt="Tree instance predictions for WHU-STree scene 13_2 with uneven point density" loading="lazy" width="1668" height="651" decoding="async"></a><figcaption>Scene 13_2 from my competition presentation. Colors distinguish predicted tree instances; this is a qualitative result, not a per-scene accuracy score.</figcaption></figure><figure class="figure"><a class="figure-link" aria-label="View full-size figure: Tree instance predictions for WHU-STree scene 15_2-1 with touching crowns (opens in a new tab)" href="assets/tree-crowns.png" target="_blank" rel="noopener"><img src="assets/tree-crowns.png" alt="Tree instance predictions for WHU-STree scene 15_2-1 with touching crowns" loading="lazy" width="1549" height="741" decoding="async"></a><figcaption>Scene 15_2-1 from my competition presentation. Touching crowns make it difficult to separate neighboring physical trees.</figcaption></figure>
 </div>
 <p class="readable">The resulting workflow connects point-level semantic and offset predictions to individual-tree outputs. I received the Special Prize in this track and presented the method and results in Wuhan.</p>
 <div class="actions">
@@ -73,7 +72,7 @@
 <p>I applied SoftGroup to urban-road point clouds, evaluating semantic categories and individual object instances. The work examined per-class IoU and instance F1, including errors in crowded scenes and overlapping tree crowns.</p>
 <p>A correct semantic label can still produce the wrong object count when two neighboring trees are grouped into one instance. Inspecting this difference helped connect segmentation outputs with the physical objects they represent.</p>
 </div>
-<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Urban-road tree instance predictions from the competition presentation" href="assets/urban-instances.png" target="_blank" rel="noopener"><img src="assets/urban-instances.png" alt="Urban-road tree instance predictions from the competition presentation" loading="lazy" width="854" height="854" decoding="async"></a><figcaption>Prediction example from my urban-road competition presentation. Instance colors show separate predicted groups. The presentation documents SoftGroup use; no unverified improvement over its baseline is claimed.</figcaption></figure><p class="sources">Method and evaluation evidence: my original competition presentation, “基于 SoftGroup 的城市道路点云语义与实例分割研究.”</p></section>
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Urban-road tree instance predictions from the competition presentation (opens in a new tab)" href="assets/urban-instances.png" target="_blank" rel="noopener"><img src="assets/urban-instances.png" alt="Urban-road tree instance predictions from the competition presentation" loading="lazy" width="854" height="854" decoding="async"></a><figcaption>Prediction example from my urban-road competition presentation. Instance colors show separate predicted groups. The presentation documents SoftGroup use; no unverified improvement over its baseline is claimed.</figcaption></figure><p class="sources">Method and evaluation evidence: my original competition presentation, “基于 SoftGroup 的城市道路点云语义与实例分割研究.”</p></section>
 <section class="paper-section" id="railway"><div class="tags">
 <span class="tag">Third competition track</span><span class="tag neutral">Participation · no award</span>
 </div>
@@ -90,7 +89,7 @@
 <strong>8 scenes</strong><span>147,847,797 submitted point labels</span>
 </div>
 </div>
-<figure class="figure"><a class="figure-link" aria-label="Enlarge figure: Historical railway submission per-class intersection over union" href="assets/railway-iou.svg" target="_blank" rel="noopener"><img src="assets/railway-iou.svg" alt="Historical railway submission per-class intersection over union" loading="lazy" decoding="async"></a><figcaption>Per-class IoU from archived submission 353373. Overhead lines reached 92.64% IoU and support devices 52.06%, showing differences that the aggregate score alone does not explain.</figcaption></figure><div class="readable">
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Historical railway submission per-class intersection over union (opens in a new tab)" href="assets/railway-iou.svg" target="_blank" rel="noopener"><img src="assets/railway-iou.svg" alt="Historical railway submission per-class intersection over union" loading="lazy" decoding="async"></a><figcaption>Per-class IoU from archived submission 353373. Overhead lines reached 92.64% IoU and support devices 52.06%, showing differences that the aggregate score alone does not explain.</figcaption></figure><div class="readable">
 <h3>What the result documents</h3>
 <p>The accepted prediction archive and saved score record document a completed competition submission. Its class-level scores help identify which railway components remain difficult to recognize.</p>
 <p>The original 2025 source and checkpoint were lost; the current public repository is an engineering reconstruction. The historical score describes the submitted predictions and has not been reproduced with the reconstructed default configuration.</p>
