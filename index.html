@@ -27,13 +27,13 @@
     <h2 id="research-heading">Research</h2>
     <article class="research-row">
       <div class="research-copy">
-        <h3><a href="gaaformer.html">GAAFormer: Geometry-Anchored Attention Transformer for Joint Point Cloud Denoising and Upsampling</a></h3>
+        <h3><a href="gaaformer.html">GeoOUFormer: Geometry-Anchored Attention for Joint Point Cloud Denoising and Upsampling</a></h3>
         <p class="authors">Haoxi Tian</p>
         <p class="venue">Under review at CVPR 2027</p>
-        <p>Fixed spatial attention windows stabilize neighborhoods as octree branches change. On 120 PUNet denoising inputs, mean Chamfer distance decreased by <strong>3.35%</strong> and Hausdorff distance by <strong>19.34%</strong> versus Serial-OUFormer, with no added learned parameters.</p>
+        <p>I study how to recover object surfaces from noisy or sparse 3D points. When the model deletes spatial cells during generation, sequence-based grouping can change which neighbors other cells consult. GeoOUFormer groups cells by spatial location to keep these relationships stable. On 120 PUNet denoising inputs, mean Chamfer and Hausdorff distances fell by <strong>3.35%</strong> and <strong>19.34%</strong> versus Serial-OUFormer, without adding parameters; overall upsampling performance remained close to the baseline.</p>
         <p class="resource-links"><a href="gaaformer.html">Project page</a><a href="gaaformer.html#results">Results</a><a href="assets/gaa-architecture.webp" target="_blank" rel="noopener" aria-label="View full-size research figure in a new tab">Full figure</a></p>
       </div>
-    <a class="research-thumb" href="gaaformer.html" aria-label="GAAFormer project"><img src="assets/gaa-architecture.webp" alt="GAAFormer encoder and geometry-anchored decoder architecture" width="1525" height="823" decoding="async"></a>
+    <a class="research-thumb" href="gaaformer.html" aria-label="GeoOUFormer project"><img src="assets/gaa-architecture.webp" alt="GeoOUFormer encoder and geometry-anchored decoder architecture" width="1525" height="823" decoding="async"></a>
       </article>
     <article class="research-row">
       <div class="research-copy">
