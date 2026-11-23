@@ -40,7 +40,7 @@
         <h3><a href="fragments.html">From Fragments to Objects: Diagnosing Object-Set Grounding in 3D Maps</a></h3>
         <p class="authors">Haoxi Tian</p>
         <p class="venue">Under review at HOUR, WACV 2027 Workshop</p>
-        <p>A diagnostic workflow separates missing candidates, object identity, answer confirmation, and localization. Evaluated on <strong>60 count queries across five Replica scenes</strong> in three runs, with matched-response controls to isolate confirmation effects.</p>
+        <p>A 3D map may store a chair’s seat and backrest under separate IDs, so retrieving two fragments does not necessarily mean finding two chairs. I built a workflow that uses color and depth images to check which fragments belong together, review uncertain judgments, and decide whether an answer is supported. Across <strong>60 queries in five Replica scenes</strong>, the study separates missing candidates, mistaken object identities, confirmation rules, and incomplete localization. Stricter checks can block both wrong and correct answers without fixing the underlying object grouping.</p>
         <p class="resource-links"><a href="fragments.html">Project page</a><a href="fragments.html#findings">Findings</a><a href="assets/fragments-teaser.webp" target="_blank" rel="noopener" aria-label="View full-size research figure in a new tab">Full figure</a></p>
       </div>
     <a class="research-thumb" href="fragments.html" aria-label="From Fragments to Objects project"><img src="assets/fragments-teaser.webp" alt="Retrieved 3D map fragments grouped into physical chairs using RGB-D evidence" loading="lazy" width="2200" height="769" decoding="async"></a>

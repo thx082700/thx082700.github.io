@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Diagnosing object-set grounding failures in fragmented 3D maps. A research project by Haoxi Tian.">
+<meta name="description" content="Why two map fragments may be one chair: a workflow for checking object identities, confirming answers, and diagnosing incomplete localization in 3D maps.">
 <meta name="theme-color" content="#ffffff">
 <title>From Fragments to Objects | Haoxi Tian</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -20,84 +20,79 @@
 <h1>From Fragments to Objects</h1>
 <p class="paper-full-title">Diagnosing Object-Set Grounding in 3D Maps</p>
 <p class="author"><strong>Haoxi Tian</strong>School of Civil Engineering and Geomatics<br>Southwest Petroleum University</p>
-<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#problem">Overview</a><a href="#diagnostics">Method</a><a href="#findings">Findings</a><a href="#limits">Scope</a></nav>
+<p class="small">Manuscript submitted to arXiv.</p></header><nav class="paper-nav" aria-label="Project sections"><a href="#problem">Overview</a><a href="#protocol">Workflow</a><a href="#diagnostics">Failure types</a><a href="#findings">Findings</a><a href="#limits">Scope</a></nav>
 <section class="paper-section" id="problem"><div class="readable">
-<h2>Do two map fragments mean two objects?</h2>
-<p class="lead">A request to “find two chairs” refers to physical objects. A 3D map might instead retrieve the seat and backrest of the same chair as separate fragments.</p>
-<p>This study examines the query layer of fixed 3D maps. It traces where object-set grounding fails, from missing candidates to ambiguous identity and the final decision to confirm an answer.</p>
+<h2>Finding two fragments is not the same as finding two chairs</h2>
+<p class="lead">Imagine asking a computer to “find two chairs” in a scanned room. The map stores a chair’s seat and backrest as separate fragments, each with its own ID. If the computer returns those two IDs, it has found two pieces of one chair, not two different chairs.</p>
+<p>This project studies how to connect map fragments to physical objects and trace why a search succeeds or fails. A correct answer needs evidence that the returned pieces represent the requested number of different objects. A fragment whose identity is unclear can remain unresolved.</p>
+<p>In the example below, five retrieved fragments support two chair groups: two pieces belong to Chair A, two belong to Chair B, and the remaining piece is uncertain. Counting the five map IDs would give the wrong number of chairs.</p>
 </div>
-<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0 (opens in a new tab)" href="assets/fragments-teaser.webp" target="_blank" rel="noopener"><img src="assets/fragments-teaser.webp" alt="Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" loading="lazy" width="2200" height="769" decoding="async"></a><figcaption>A saved case from Replica office0. RGB-D evidence supports Chair A = {393, 340} and Chair B = {394, 341}, while fragment 343 remains unresolved. This illustration explains membership; it is not a measured improvement from ledger constraints.</figcaption></figure></section>
+<figure class="figure"><a class="figure-link" aria-label="View full-size figure: Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0 (opens in a new tab)" href="assets/fragments-teaser.webp" target="_blank" rel="noopener"><img src="assets/fragments-teaser.webp" alt="Five map fragments associated with two distinct chairs and one unresolved fragment in Replica office0" loading="lazy" width="2200" height="769" decoding="async"></a><figcaption>A saved case from Replica office0. RGB-D evidence supports Chair A = {393, 340} and Chair B = {394, 341}, while fragment 343 remains unresolved. This illustration explains membership; it is not a measured improvement from ledger constraints.</figcaption></figure>
+</section>
 <section class="paper-section" id="contribution"><div class="readable">
-<h2>My contribution</h2>
-<p>I built an evidence-indexed query and evaluation workflow around fixed FindAnything maps. It links retrieved fragment IDs to depth-checked RGB-D views, records same-object, different-object, and unresolved judgments, and evaluates object sets separately from complete-object localization.</p>
-<p>I designed fixed-response controls that preserve the observations and model responses while changing a specific confirmation rule. This makes it possible to distinguish an answer-policy effect from a change in the underlying object identities.</p>
-</div></section><section class="paper-section" id="diagnostics"><h2>Separate the stages of failure</h2>
-<div class="method-list">
-<div>
-<h3>Candidate coverage</h3>
-<p>Does the map contain eligible fragments for the requested objects in the first place?</p>
-</div>
-<div>
-<h3>Physical identity</h3>
-<p>Do retrieved fragments belong to the same physical object, different objects, or an unresolved case?</p>
-</div>
-<div>
-<h3>Answer confirmation</h3>
-<p>How do the rules for within-group support and cross-group distinctness change the confirmed answer?</p>
-</div>
-<div>
-<h3>Geometric localization</h3>
-<p>Even when an object set is correct, how well do its fragments localize complete physical objects?</p>
-</div>
-</div>
-<div class="stats">
-<div class="stat">
-<strong>5</strong><span>Fixed FindAnything maps</span>
-</div>
-<div class="stat">
-<strong>20</strong><span>Scene/category pools</span>
-</div>
-<div class="stat">
-<strong>60 × 3</strong><span>Count queries across three runs</span>
-</div>
-</div>
-<p class="readable">An auditable identity ledger links membership judgments to indexed RGB-D evidence. Matched-response controls preserve shared observations and judgments while changing a specific execution stage.</p></section>
-<section class="paper-section" id="protocol"><h2>Implementation and evaluation protocol</h2>
-<div class="method-list">
-<div>
-<h3>Evidence preparation</h3>
-<p>Category retrieval uses the upstream ViT-L/14 encoder and C++ scorer. Five candidates per scene/category pool are projected into at most two fixed RGB-D seed views, with recorded depth used for visibility checks. Ground-truth instance labels are reserved for evaluation.</p>
-</div>
-<div>
-<h3>Identity and confirmation</h3>
-<p>Count-neutral proposal and review produce same, different, or unknown pair judgments. The executor then applies membership and distinctness checks before confirming the requested object set. Each decision retains its evidence references.</p>
-</div>
-<div>
-<h3>Fixed study cohort</h3>
-<p>Five Replica maps provide 20 scene/category pools, 100 candidate entries, and 152 prepared evidence images. Sixty queries contain 42 positives and 18 count-insufficient negatives; three fresh runs measure variation on these fixed inputs.</p>
-</div>
-<div>
-<h3>Audit and replay</h3>
-<p>An independent implementation of the scoring rules reproduced correctness and pair metrics for 1,080 archived case records. Matched-response replay reconstructed all 180 Ledger outcomes across three runs before changing the readout rule.</p>
-</div>
-</div>
-<p class="small">Archived records include multiple pipelines and controls; they are not 1,080 independent queries. Repeated count queries share maps, candidates, and observations.</p></section><section class="paper-section" id="findings"><div class="readable">
-<h2>What the diagnostic study reveals</h2>
-<ul class="detail-list">
-<li>Under the primary association rule, candidate eligibility limits possible verified success to <strong>27 of 42 positive queries</strong>. This is an eligibility ceiling, not achieved accuracy.</li>
-<li>
-<strong>Eleven queries remain ineligible</strong> throughout the tested association-threshold range.</li>
-<li>In the matched confirmation-rule intervention, all five changed query/run rows come from <strong>one sofa pool</strong>, with no identity-membership changes.</li>
-<li>Residual splits and weak complete-object localization reveal failures that final set accuracy alone can hide.</li>
-</ul>
+<h2>What I built</h2>
+<p>I built a query and evaluation workflow around existing FindAnything maps. It connects retrieved fragments to the original color and depth images, records which pieces appear to belong to the same object, and checks whether those judgments support an answer.</p>
+<p>The workflow keeps a record of the evidence and decisions, called an identity ledger. This makes it possible to inspect a failure instead of seeing only a final answer. I also designed controlled comparisons that reuse exactly the same images and model responses while changing the final confirmation rule.</p>
 </div></section>
+<section class="paper-section" id="protocol"><div class="readable">
+<h2>How the workflow handles “find two chairs”</h2>
+<ol class="detail-list">
+<li><strong>Retrieve possible chair fragments.</strong> The system searches the fixed map using the category “chair” and returns five candidates. The requested number does not change this candidate list.</li>
+<li><strong>Look back at the recorded images.</strong> The fragments are projected into up to two selected RGB-D views: color images paired with depth measurements. The model sees the room context and details of each visible fragment. Depth checks help connect the reconstructed surface to the recorded observation.</li>
+<li><strong>Decide which pieces belong together.</strong> A model call proposes object groups without being told whether the user wants one, two, or three chairs. It can judge two fragments to be parts of the same object, parts of different objects, or unresolved. This separates object grouping from the requested count.</li>
+<li><strong>Review the proposed relationships.</strong> A second call checks proposed same-object pairs and representative distinctions between groups using the original evidence. It can correct or withhold a judgment. Both calls use the same model, so review can still repeat an earlier mistake.</li>
+<li><strong>Check whether an answer is supported.</strong> Programmed rules inspect the recorded relationships before confirming the requested set. The strict Ledger version requires complete pairwise support within a group and evidence that established groups are distinct. Missing evidence can prevent confirmation even when the proposed answer happens to be correct.</li>
+</ol>
+<p>For example, suppose A is judged to belong with B, and B with C, but the relationship between A and C is unknown. The strict rule does not automatically accept all three as one confirmed object. This is a rule about whether the evidence is sufficient; it does not guarantee that the model’s judgments are true.</p>
+</div></section>
+<section class="paper-section" id="diagnostics"><h2>Four different reasons a search can fail</h2>
+<div class="method-list">
+<div><h3>The candidates are insufficient</h3><p>The user asks for two chairs, but the retrieved list contains only pieces of one chair. Later reasoning cannot select a second distinct chair from those candidates.</p></div>
+<div><h3>The pieces are grouped incorrectly</h3><p>A seat and backrest from the same chair are counted separately, or pieces of two different chairs are merged. This is an object-identity error.</p></div>
+<div><h3>The answer is confirmed incorrectly</h3><p>The groups may be unchanged, but a permissive rule releases an unsupported answer. A strict rule may instead withhold an answer that is actually correct.</p></div>
+<div><h3>Only part of the object is located</h3><p>The system identifies the right chair but returns a box around only its seat. Recognizing which chair a piece belongs to does not mean locating the complete chair.</p></div>
+</div></section>
+<section class="paper-section" id="study"><div class="readable">
+<h2>How I tested it</h2>
+<p>The study uses five fixed Replica indoor maps. Four categories—chair, sofa, table, and lamp—and requests for one, two, or three objects produce 60 queries. The scenes contain enough target objects for 42 queries; the other 18 test requests for more objects than are present. The original pipelines each run three times.</p>
+<p>The 20 scene/category candidate lists contain 100 entries and 152 prepared evidence images. Queries for different counts share candidates and observations, so they are not independent scene tests. Ground-truth object labels are used only for evaluation.</p>
+<p>To isolate the effect of the final rules, I first reproduced all 180 recorded Ledger outcomes across the three runs. I then changed the confirmation rule while preserving the recorded model judgments and evidence. This tests what the rule changes without asking the model to generate a different answer.</p>
+</div></section>
+<section class="paper-section" id="findings"><div class="readable">
+<h2>What the experiments found</h2>
+<h3>Some failures begin before the model can choose an answer</h3>
+<p>Under the primary rule for matching fragments to ground-truth objects, only <strong>27 of the 42 positive queries</strong> have candidates that can form a verified answer. The resulting <strong>64.3% ceiling is not achieved accuracy</strong>: it describes what is possible under those candidates and that evaluation rule. The ceiling changes with the matching threshold, while 11 queries remain ineligible throughout the tested range.</p>
+<h3>Visual review corrects some mistakes</h3>
+<p>In the primary fixed-response comparison, keeping the review step yields <strong>10 verified positive answers out of 42</strong>, compared with <strong>8 without review</strong>. It removes some observed mistaken merges. However, nine wrong-merge occurrences represent only three distinct fragment pairs repeated across count queries. Review does not fix every identity error or eliminate false confirmations.</p>
+<h3>Stricter confirmation changes which answers are released</h3>
+<p>With the same recorded judgments, a less restrictive cross-group rule confirms one additional correct answer in each run, but also confirms one additional wrong answer in two of the three runs.</p>
+</div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Confirmation rule comparison across three runs"><table>
+<caption>Same recorded model judgments; different final confirmation rules</caption>
+<thead><tr><th scope="col">Confirmation rule</th><th scope="col">Verified positives per run, out of 42</th><th scope="col">False confirmations per run, out of 18 negatives</th></tr></thead>
+<tbody>
+<tr><td>Strict Ledger</td><td>10 / 13 / 12</td><td>4 / 3 / 4</td></tr>
+<tr><td>Reviewed-subset cross-group rule</td><td>11 / 14 / 13</td><td>5 / 3 / 5</td></tr>
+</tbody>
+</table></div>
+<div class="readable">
+<p><strong>The object groups do not change.</strong> All five changed query/run outcomes come from one sofa candidate list; the other 19 lists have no answer changes. This shows a local tradeoff in whether answers are confirmed, rather than a general improvement in recognizing which fragments belong together.</p>
+<h3>A correct identity can still give an incomplete location</h3>
+<p>In one example, the system identifies the correct chair but returns geometry mainly covering its seat. The predicted box is only <strong>0.222 m high</strong>, while the complete chair is <strong>1.092 m high</strong>. A score for choosing the correct object can therefore hide poor coverage of that object’s shape.</p>
+</div>
+<details class="comparison"><summary>How verification and the controlled comparison work</summary><div class="readable">
+<p>A confirmed answer has passed the executor’s checks. A verified answer also passes the evaluation against ground-truth objects. If a fragment cannot be reliably associated with a ground-truth instance, a confirmed answer may remain indeterminate rather than being proven correct or wrong. The primary association thresholds are 90% dominant-instance purity and valid-label coverage.</p>
+<p>The exact confirmation-rule comparison retains Ledger’s within-group checks and registry. It replaces only the requirement for complete cross-group distinctness with a reviewed-subset rule: reviewed cross-pairs must be different, an explicitly reviewed unknown blocks confirmation, and at least one recorded different pair is required if none were reviewed. This reproduces all Stateless-PR answers across three runs without changing object memberships.</p>
+<p>The strict multi-object gate checks all established groups, including unselected ones. Count-independent proposal and review are also used in the comparison adapters, so withholding the requested count is not unique to Ledger. The study does not directly test whether providing a count causes a model to invent extra objects.</p>
+</div></details>
+</section>
 <section class="paper-section" id="limits"><div class="readable">
-<h2>What the diagnosis is useful for</h2>
-<p>The diagnostic separation helps identify whether a system needs better candidate retrieval, identity association, confirmation logic, or geometric localization. A stricter answer rule can change which answers are released while leaving every identity partition unchanged.</p>
-<p>The study supports evaluating coverage, identity, confirmation, and localization separately. It does not establish a general accuracy benefit from stricter ledger assembly.</p>
-<p>The experiments use fixed maps and recorded observations. They do not measure robot navigation or closed-loop control performance.</p>
+<h2>Why this matters</h2>
+<p>The workflow helps identify what needs improvement. Missing candidates call for better retrieval or map coverage. Incorrect grouping calls for better identity judgments. Unsupported answers call for changes to confirmation rules. Incomplete boxes call for better geometric localization. A single final accuracy score can hide these different problems.</p>
+<p>The experiments show that stronger checks can reject both incorrect and correct answers, without repairing the underlying groups. The contribution is a way to trace and test these failures separately, with concrete evidence for what each stage changes.</p>
+<p>The study is small, uses fixed synthetic indoor scenes, and includes scenes used during development. It does not establish a general accuracy advantage for stricter Ledger rules. Robot navigation, new-view acquisition, and manipulation are outside the experiments.</p>
 </div></section><div class="bottom-nav">
-<a href="index.html#research">Back to research</a><a href="gaaformer.html">Explore GAAFormer</a>
+<a href="index.html#research">Back to research</a><a href="gaaformer.html">Explore GeoOUFormer</a>
 </div>
 </div>
 </main><footer class="footer"><div class="wrap">
